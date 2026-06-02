@@ -111,6 +111,27 @@ export default function WorkspacePage() {
     [togglePage],
   );
 
+  // ── Copy original text as-is (no translation) ─────────────
+  const handleCopyOriginal = useCallback(() => {
+    if (!currentProject) return;
+    if (selectedPages.length === 0) {
+      toast.error('No pages selected.');
+      return;
+    }
+
+    let count = 0;
+    for (const pageNum of selectedPages) {
+      const page = currentProject.pages.find((p) => p.pageNumber === pageNum);
+      if (page?.sourceText) {
+        updatePageTranslation(pageNum, page.sourceText, undefined, undefined);
+        updatePageStatus(pageNum, 'translated');
+        count++;
+      }
+    }
+
+    toast.success(`Copied ${count} page${count !== 1 ? 's' : ''} as-is`);
+  }, [currentProject, selectedPages, updatePageTranslation, updatePageStatus]);
+
   // ── Translate selected pages (manual button) ─────────────
   const handleTranslateSelected = useCallback(async (explicitPages?: number[]) => {
     if (!currentProject) return;
@@ -369,6 +390,7 @@ export default function WorkspacePage() {
         {/* Toolbar */}
         <Toolbar
           onTranslateSelected={handleTranslateSelected}
+          onCopyOriginal={handleCopyOriginal}
           onAutoTranslate={handleAutoTranslate}
           onStopTranslation={handleStopTranslation}
           isTranslating={isTranslating}
