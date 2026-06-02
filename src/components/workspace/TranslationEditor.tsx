@@ -5,7 +5,7 @@
 // editable and shows its page number as a divider.
 // ─────────────────────────────────────────────────────────────
 
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import type { PageData } from '../../types';
@@ -206,11 +206,20 @@ interface TranslationEditorProps {
   onManualEdit: (pageNumber: number) => void;
 }
 
+const FONT_SIZES = [
+  { label: 'S', value: '11px' },
+  { label: 'M', value: '13px' },
+  { label: 'L', value: '15px' },
+] as const;
+
 export default function TranslationEditor({
   pages,
   onUpdatePage,
   onManualEdit,
 }: TranslationEditorProps) {
+  const [fontSizeIdx, setFontSizeIdx] = useState(0);
+  const fontSize = FONT_SIZES[fontSizeIdx].value;
+
   return (
     <div
       className="workspace-panel"
@@ -243,16 +252,48 @@ export default function TranslationEditor({
         >
           Translation
         </span>
-        <span
-          style={{
-            fontSize: 'var(--text-xs)',
-            color: 'var(--text-muted)',
-            fontFamily: 'var(--font-arabic)',
-            direction: 'rtl',
-          }}
-        >
-          العربية
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {/* Font size selector */}
+          <div
+            style={{
+              display: 'flex',
+              border: '1px solid var(--border-primary)',
+              borderRadius: '4px',
+              overflow: 'hidden',
+            }}
+          >
+            {FONT_SIZES.map((size, idx) => (
+              <button
+                key={size.label}
+                type="button"
+                onClick={() => setFontSizeIdx(idx)}
+                style={{
+                  padding: '2px 8px',
+                  fontSize: '10px',
+                  fontWeight: fontSizeIdx === idx ? 700 : 400,
+                  background: fontSizeIdx === idx ? 'var(--accent)' : 'transparent',
+                  color: fontSizeIdx === idx ? '#000' : 'var(--text-muted)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  borderRight: idx < FONT_SIZES.length - 1 ? '1px solid var(--border-primary)' : 'none',
+                }}
+                title={`Font size: ${size.value}`}
+              >
+                {size.label}
+              </button>
+            ))}
+          </div>
+          <span
+            style={{
+              fontSize: 'var(--text-xs)',
+              color: 'var(--text-muted)',
+              fontFamily: 'var(--font-arabic)',
+              direction: 'rtl',
+            }}
+          >
+            العربية
+          </span>
+        </div>
       </div>
 
       {/* Scrollable continuous translation */}
@@ -262,7 +303,8 @@ export default function TranslationEditor({
           flex: 1,
           overflowY: 'auto',
           background: '#f0f0f0',
-        }}
+          '--doc-font-size': fontSize,
+        } as React.CSSProperties}
       >
         <div
           style={{
