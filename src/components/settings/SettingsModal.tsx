@@ -89,8 +89,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
         setTestStatus('success');
       } else if (llmConfig.provider === 'openai') {
-        // Goes through Vite proxy: /api/translate → OpenAI chat completions
-        const response = await fetch('/api/translate', {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -116,11 +115,13 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
         setTestStatus('success');
       } else if (llmConfig.provider === 'gemini') {
-        // Gemini: direct call with API key in URL
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${llmConfig.model}:generateContent?key=${llmConfig.apiKey}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${llmConfig.model}:generateContent`;
         const response = await fetch(url, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': llmConfig.apiKey,
+          },
           body: JSON.stringify({
             contents: [{ parts: [{ text: testPrompt }] }],
             generationConfig: { maxOutputTokens: 50 },
@@ -196,12 +197,17 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
             </select>
             {llmConfig.provider === 'anthropic' && (
               <span style={{ fontSize: 'var(--text-xs)', color: 'var(--success)' }}>
-                ✓ Direct browser connection supported
+                ✓ Direct browser connection
               </span>
             )}
-            {(llmConfig.provider === 'openai' || llmConfig.provider === 'gemini') && (
-              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--warning)' }}>
-                ⚠ Requires proxy server (Vite dev proxy or Vercel)
+            {llmConfig.provider === 'openai' && (
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--success)' }}>
+                ✓ Direct browser connection
+              </span>
+            )}
+            {llmConfig.provider === 'gemini' && (
+              <span style={{ fontSize: 'var(--text-xs)', color: 'var(--success)' }}>
+                ✓ Direct browser connection
               </span>
             )}
           </div>
