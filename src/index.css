@@ -1036,13 +1036,17 @@ h4 { font-size: var(--text-lg); }
 /* Document-style rendering */
 .tiptap-document {
   padding: 32px 40px;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.8;
   color: #1a1a1a;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Amiri', 'Noto Naskh Arabic', var(--font-arabic), serif;
 }
 
 .tiptap-document p {
-  margin-bottom: 0.6em;
+  margin-bottom: 0.5em;
+  white-space: pre-wrap;
 }
 
 /* --- Context Menu --- */

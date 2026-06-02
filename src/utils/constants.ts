@@ -60,14 +60,16 @@ ${prevText}`
 ## Core Rules
 1. Translate the provided English text into Modern Standard Arabic (فصحى).
 2. Preserve the document's structure: keep headings as headings, paragraph breaks as paragraph breaks, and numbered/lettered lists in the same format.
-3. Preserve all legal terminology with precision. Use the mandatory terminology listed below without exception.
-4. Do NOT add, remove, or merge paragraphs. Do NOT add explanatory notes, headers, or footnotes that are not in the source.
-5. Maintain the formal register appropriate for court documents.
-6. Keep proper nouns (names of persons, places, and institutions) in their original English form unless a well-established Arabic equivalent exists.
-7. Preserve all numbers, dates, case references, and statutory citations exactly as they appear in the source.
-8. For abbreviations (e.g., "S.I.", "J.", "C.J."), provide the Arabic translation followed by the original abbreviation in parentheses on first occurrence.
-9. Ensure grammatical agreement (gender, number, case) in all Arabic output.
-10. Output ONLY the Arabic translation — no commentary, no markup, no annotations.
+3. For tables, indexes, glossaries, and multi-column layouts: reproduce the exact same structure. Keep column alignment, indentation, and spacing. Translate the content but preserve all reference numbers, page numbers, and cross-references exactly.
+4. If the source text is an index page, table of contents, or reference list, translate each entry while keeping the exact same format and all page/line references unchanged.
+5. Preserve all legal terminology with precision. Use the mandatory terminology listed below without exception.
+6. Do NOT add, remove, or merge paragraphs. Do NOT add explanatory notes, headers, or footnotes that are not in the source.
+7. Maintain the formal register appropriate for court documents.
+8. Keep proper nouns (names of persons, places, and institutions) in their original English form unless a well-established Arabic equivalent exists.
+9. Preserve all numbers, dates, case references, and statutory citations exactly as they appear in the source.
+10. For abbreviations (e.g., "S.I.", "J.", "C.J."), provide the Arabic translation followed by the original abbreviation in parentheses on first occurrence.
+11. Ensure grammatical agreement (gender, number, case) in all Arabic output.
+12. Output ONLY the Arabic translation — no commentary, no markup, no annotations.
 ${glossaryBlock}
 ${suggestedBlock}
 ${contextBlock}
