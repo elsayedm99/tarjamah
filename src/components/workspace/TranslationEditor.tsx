@@ -85,67 +85,73 @@ function PageEditor({ page, onUpdate, onManualEdit }: PageEditorProps) {
     <div
       data-page={page.pageNumber}
       style={{
-        background: 'var(--bg-elevated)',
-        borderRadius: 'var(--radius-md)',
-        boxShadow: 'var(--shadow-md)',
+        background: 'white',
+        borderRadius: '2px',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
         overflow: 'hidden',
-        border: '1px solid var(--border-primary)',
+        color: '#1a1a1a',
       }}
     >
-      {/* Page divider header */}
+      {/* Page divider — matches exported doc style */}
       <div
         style={{
+          textAlign: 'center',
+          padding: '16px 24px 8px',
+          fontSize: '12px',
+          color: '#999',
+          fontWeight: 500,
+          letterSpacing: '0.02em',
+          borderBottom: '1px solid #eee',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: 'var(--space-2) var(--space-3)',
-          background: 'var(--bg-secondary)',
-          borderBottom: '1px solid var(--border-primary)',
-          fontSize: 'var(--text-xs)',
-          fontWeight: 'var(--font-medium)',
-          color: 'var(--text-secondary)',
+          justifyContent: 'center',
+          gap: '8px',
         }}
       >
+        <span style={{ flex: 1, height: '1px', background: '#e5e5e5' }} />
         <span style={{ fontFamily: 'var(--font-arabic)', direction: 'rtl' }}>
           صفحة {page.pageNumber}
         </span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-          {statusLabel && (
-            <span className={`badge badge-${page.status === 'flagged' ? 'error' : page.status === 'edited' ? 'info' : page.status === 'in_progress' ? 'warning' : 'success'}`}>
+        <span>—</span>
+        <span>Page {page.pageNumber}</span>
+        {statusLabel && (
+          <>
+            <span>—</span>
+            <span style={{ color: statusLabel.color, fontSize: '11px' }}>
               {statusLabel.text}
             </span>
-          )}
-          <span>Page {page.pageNumber}</span>
-        </div>
+          </>
+        )}
+        <span style={{ flex: 1, height: '1px', background: '#e5e5e5' }} />
       </div>
 
       {/* Editor or placeholder */}
       {page.status === 'in_progress' ? (
         <div
           style={{
-            padding: 'var(--space-8)',
+            padding: '48px 32px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 'var(--space-3)',
+            gap: '12px',
             minHeight: '200px',
-            color: 'var(--text-muted)',
+            color: '#999',
           }}
         >
           <div className="spinner" />
-          <span style={{ fontSize: 'var(--text-sm)' }}>Translating page {page.pageNumber}…</span>
+          <span style={{ fontSize: '13px' }}>Translating page {page.pageNumber}…</span>
         </div>
       ) : isEmpty && page.status === 'untranslated' ? (
         <div
           style={{
-            padding: 'var(--space-8) var(--space-6)',
+            padding: '48px 32px',
             minHeight: '200px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: 'var(--text-muted)',
-            fontSize: 'var(--text-sm)',
+            color: '#bbb',
+            fontSize: '14px',
             fontFamily: 'var(--font-arabic)',
             direction: 'rtl',
           }}
@@ -157,7 +163,7 @@ function PageEditor({ page, onUpdate, onManualEdit }: PageEditorProps) {
           {editor ? (
             <EditorContent editor={editor} />
           ) : (
-            <div style={{ padding: 'var(--space-4)', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ padding: '24px', display: 'flex', justifyContent: 'center' }}>
               <div className="spinner" />
             </div>
           )}
@@ -255,7 +261,7 @@ export default function TranslationEditor({
         style={{
           flex: 1,
           overflowY: 'auto',
-          background: 'var(--bg-tertiary)',
+          background: '#f0f0f0',
         }}
       >
         <div
