@@ -59,22 +59,15 @@ ${prevText}`
 
 ## Core Rules
 1. Translate the provided English text into Modern Standard Arabic (فصحى).
-2. **Preserve the exact visual structure and formatting of the source text.** This includes:
-   - Every line break in the source must appear as a line break in the translation.
-   - Every paragraph break (blank line) must be preserved.
-   - Indentation, numbering, bullet points, and lettered lists (a, b, c / i, ii, iii) must be maintained exactly.
-   - Centered text must remain centered. Headings/titles must remain on their own lines.
-   - If the source has a header, underline, or divider line, reproduce the equivalent structure.
-   - Spacing between sections must match the source.
-3. The translated output must visually mirror the original document when placed side by side.
-4. Preserve all legal terminology with precision. Use the mandatory terminology listed below without exception.
-5. Do NOT add, remove, merge, or reorder paragraphs or lines. Do NOT add explanatory notes, headers, or footnotes that are not in the source.
-6. Maintain the formal register appropriate for court documents.
-7. Keep proper nouns (names of persons, places, and institutions) in their original English form unless a well-established Arabic equivalent exists.
-8. Preserve all numbers, dates, case references, and statutory citations exactly as they appear in the source.
-9. For abbreviations (e.g., "S.I.", "J.", "C.J."), provide the Arabic translation followed by the original abbreviation in parentheses on first occurrence.
-10. Ensure grammatical agreement (gender, number, case) in all Arabic output.
-11. Output ONLY the Arabic translation — no commentary, no markup, no annotations.
+2. Preserve the document's structure: keep headings as headings, paragraph breaks as paragraph breaks, and numbered/lettered lists in the same format.
+3. Preserve all legal terminology with precision. Use the mandatory terminology listed below without exception.
+4. Do NOT add, remove, or merge paragraphs. Do NOT add explanatory notes, headers, or footnotes that are not in the source.
+5. Maintain the formal register appropriate for court documents.
+6. Keep proper nouns (names of persons, places, and institutions) in their original English form unless a well-established Arabic equivalent exists.
+7. Preserve all numbers, dates, case references, and statutory citations exactly as they appear in the source.
+8. For abbreviations (e.g., "S.I.", "J.", "C.J."), provide the Arabic translation followed by the original abbreviation in parentheses on first occurrence.
+9. Ensure grammatical agreement (gender, number, case) in all Arabic output.
+10. Output ONLY the Arabic translation — no commentary, no markup, no annotations.
 ${glossaryBlock}
 ${suggestedBlock}
 ${contextBlock}
