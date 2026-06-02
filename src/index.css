@@ -1033,6 +1033,24 @@ h4 { font-size: var(--text-lg); }
   padding-right: var(--space-3);
 }
 
+/* Document-style rendering — preserves original formatting */
+.tiptap-document {
+  padding: var(--space-8) var(--space-10);
+  font-size: 15px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.tiptap-document p {
+  margin-bottom: 0.6em;
+  white-space: pre-wrap;
+}
+
+.tiptap-document p:empty {
+  min-height: 1.2em;
+}
+
 /* --- Context Menu --- */
 .context-menu {
   position: fixed;

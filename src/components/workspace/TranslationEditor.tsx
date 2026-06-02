@@ -27,7 +27,7 @@ function PageEditor({ page, onUpdate, onManualEdit }: PageEditorProps) {
     content: page.translatedText || '',
     editorProps: {
       attributes: {
-        class: 'tiptap-editor',
+        class: 'tiptap-editor tiptap-document',
         dir: 'rtl',
         lang: 'ar',
         spellcheck: 'false',
