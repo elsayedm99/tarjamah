@@ -34,6 +34,8 @@ export default function WorkspacePage() {
     updatePageTranslation,
     updatePageStatus,
     markPageEdited,
+    deletePages,
+    addBlankPage,
     closeSettingsModal,
   } = useWorkspaceStore();
 
@@ -110,6 +112,20 @@ export default function WorkspacePage() {
     },
     [togglePage],
   );
+
+  const handleDeleteSelected = useCallback(() => {
+    if (selectedPages.length === 0) return;
+    const count = selectedPages.length;
+    if (!window.confirm(`Delete ${count} page${count !== 1 ? 's' : ''}? This cannot be undone.`)) return;
+    deletePages(selectedPages);
+    toast.success(`Deleted ${count} page${count !== 1 ? 's' : ''}`);
+  }, [selectedPages, deletePages]);
+
+  const handleAddPage = useCallback(() => {
+    if (!currentProject) return;
+    addBlankPage(currentProject.totalPages);
+    toast.success('Added blank page');
+  }, [currentProject, addBlankPage]);
 
   // ── Copy original text as-is (no translation) ─────────────
   const handleCopyOriginal = useCallback(() => {
@@ -381,6 +397,8 @@ export default function WorkspacePage() {
         onShiftSelectPage={handleShiftSelectPage}
         onSelectAll={handleSelectAll}
         onDeselectAll={handleDeselectAll}
+        onDeleteSelected={handleDeleteSelected}
+        onAddPage={handleAddPage}
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
       />

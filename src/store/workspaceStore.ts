@@ -92,6 +92,10 @@ interface WorkspaceActions {
   markPageEdited: (pageNumber: number) => void;
   markPageReviewed: (pageNumber: number) => void;
 
+  // Page management
+  deletePages: (pageNumbers: number[]) => void;
+  addBlankPage: (afterPageNumber: number) => void;
+
   // Paragraph-level updates
   updateParagraphTranslation: (
     pageNumber: number,
@@ -392,6 +396,62 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
               ),
             }),
           ),
+        };
+      }),
+
+    // ── Page Management ───────────────────────────────────
+
+    deletePages: (pageNumbers) =>
+      set((state) => {
+        if (!state.currentProject) return state;
+        const remaining = state.currentProject.pages
+          .filter((p) => !pageNumbers.includes(p.pageNumber))
+          .map((p, idx) => ({ ...p, pageNumber: idx + 1 }));
+        const newTotal = remaining.length;
+        return {
+          currentProject: {
+            ...state.currentProject,
+            pages: remaining,
+            totalPages: newTotal,
+            updatedAt: Date.now(),
+          },
+          selectedPages: state.selectedPages
+            .filter((pn) => !pageNumbers.includes(pn))
+            .map((pn) => {
+              // Recalculate page number after deletions
+              const deletedBefore = pageNumbers.filter((d) => d < pn).length;
+              return pn - deletedBefore;
+            })
+            .filter((pn) => pn >= 1 && pn <= newTotal),
+          activePageNumber: Math.min(state.activePageNumber, Math.max(newTotal, 1)),
+        };
+      }),
+
+    addBlankPage: (afterPageNumber) =>
+      set((state) => {
+        if (!state.currentProject) return state;
+        const newPage: PageData = {
+          pageNumber: afterPageNumber + 1,
+          sourceText: '',
+          translatedText: '',
+          status: 'untranslated',
+          paragraphs: [],
+          isManuallyEdited: false,
+          isReviewed: false,
+          qualityFlags: [],
+        };
+        const pages = [...state.currentProject.pages];
+        pages.splice(afterPageNumber, 0, newPage);
+        // Renumber all pages
+        const renumbered = pages.map((p, idx) => ({ ...p, pageNumber: idx + 1 }));
+        return {
+          currentProject: {
+            ...state.currentProject,
+            pages: renumbered,
+            totalPages: renumbered.length,
+            updatedAt: Date.now(),
+          },
+          activePageNumber: afterPageNumber + 1,
         };
       }),
 

@@ -16,6 +16,8 @@ interface SidebarProps {
   onShiftSelectPage: (pageNumber: number) => void;
   onSelectAll: () => void;
   onDeselectAll: () => void;
+  onDeleteSelected: () => void;
+  onAddPage: () => void;
   collapsed: boolean;
   onToggleCollapse: () => void;
 }
@@ -31,6 +33,8 @@ export default function Sidebar({
   onShiftSelectPage,
   onSelectAll,
   onDeselectAll,
+  onDeleteSelected,
+  onAddPage,
   collapsed,
   onToggleCollapse,
 }: SidebarProps) {
@@ -130,7 +134,7 @@ export default function Sidebar({
           />
         </div>
 
-        {/* Select All / Deselect All */}
+        {/* Select All / Deselect / Delete */}
         <div
           style={{
             display: 'flex',
@@ -150,7 +154,23 @@ export default function Sidebar({
             style={{ fontSize: '10px', flex: 1, padding: '2px 6px' }}
             onClick={onDeselectAll}
           >
-            Deselect All
+            Deselect
+          </button>
+          <button
+            className="btn btn-ghost btn-sm"
+            style={{
+              fontSize: '10px',
+              padding: '2px 6px',
+              color: selectedPages.length > 0 ? 'var(--error)' : undefined,
+            }}
+            onClick={onDeleteSelected}
+            disabled={selectedPages.length === 0}
+            title="Delete selected pages"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+            </svg>
           </button>
         </div>
       </div>
@@ -196,6 +216,23 @@ export default function Sidebar({
             No pages
           </div>
         )}
+
+        {/* Add Page button */}
+        <button
+          className="btn btn-ghost btn-sm"
+          style={{
+            fontSize: '11px',
+            padding: '6px',
+            border: '1px dashed var(--border-primary)',
+            borderRadius: 'var(--radius-md)',
+            color: 'var(--text-muted)',
+            marginTop: 'var(--space-1)',
+          }}
+          onClick={onAddPage}
+          title="Add a blank page"
+        >
+          + Add Page
+        </button>
       </div>
     </aside>
   );
