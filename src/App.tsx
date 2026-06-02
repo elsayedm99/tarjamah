@@ -2,7 +2,7 @@
 // Tarjama — App Root
 // ─────────────────────────────────────────────────────────────
 
-import React, { Suspense, lazy, useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { useSettingsStore } from './store/settingsStore';

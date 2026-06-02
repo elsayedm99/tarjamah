@@ -101,6 +101,7 @@ export async function renderPageThumbnail(
   }
 
   await page.render({
+    canvas,
     canvasContext: context,
     viewport: scaledViewport,
   }).promise;
@@ -137,6 +138,7 @@ export async function renderPageToCanvas(
   }
 
   await page.render({
+    canvas,
     canvasContext: context,
     viewport: scaledViewport,
   }).promise;

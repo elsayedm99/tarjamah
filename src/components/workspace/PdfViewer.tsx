@@ -103,6 +103,7 @@ function PdfPageCanvas({
         if (!context) throw new Error('Canvas context failed');
 
         await page.render({
+          canvas,
           canvasContext: context,
           viewport,
         }).promise;
@@ -258,7 +259,6 @@ interface PdfViewerProps {
 export default function PdfViewer({
   pages,
   selectedPages,
-  activePage,
   onSelectPage,
   onTogglePage,
   onShiftSelectPage,

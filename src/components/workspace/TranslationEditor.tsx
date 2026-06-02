@@ -5,7 +5,7 @@
 // editable and shows its page number as a divider.
 // ─────────────────────────────────────────────────────────────
 
-import { useCallback, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import type { PageData } from '../../types';
@@ -56,7 +56,7 @@ function PageEditor({ page, onUpdate, onManualEdit }: PageEditorProps) {
     if (hasUserTyped.current) return;
 
     isExternalUpdate.current = true;
-    editor.commands.setContent(page.translatedText || '', false);
+    editor.commands.setContent(page.translatedText || '', { emitUpdate: false });
     isExternalUpdate.current = false;
   }, [page.translatedText, editor]);
 

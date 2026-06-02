@@ -151,7 +151,7 @@ function updatePage(
 // ── Store ───────────────────────────────────────────────────
 
 export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
-  (set, get) => ({
+  (set) => ({
     ...DEFAULT_WORKSPACE,
 
     // ── Project ───────────────────────────────────────────

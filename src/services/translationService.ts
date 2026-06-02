@@ -5,8 +5,6 @@
 import { translate } from './llmProviders';
 import { buildSystemPrompt } from '../utils/constants';
 import {
-  countSentences,
-  countParagraphs,
   getLastNSentences,
   generateId,
 } from '../utils/helpers';

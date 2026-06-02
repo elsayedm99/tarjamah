@@ -41,6 +41,7 @@ async function renderPageForOcr(
   }
 
   await page.render({
+    canvas,
     canvasContext: context,
     viewport,
   }).promise;
