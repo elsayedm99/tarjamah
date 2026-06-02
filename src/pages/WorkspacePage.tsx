@@ -123,7 +123,7 @@ export default function WorkspacePage() {
     for (const pageNum of selectedPages) {
       const page = currentProject.pages.find((p) => p.pageNumber === pageNum);
       if (page?.sourceText) {
-        updatePageTranslation(pageNum, page.sourceText, undefined, undefined);
+        updatePageTranslation(pageNum, page.sourceText, [], []);
         updatePageStatus(pageNum, 'translated');
         count++;
       }

@@ -407,7 +407,8 @@ function UploadPage() {
         // Persist PDF binary to IndexedDB for resume
         if (fileType === 'pdf') {
           const { savePdfData } = await import('../services/fileStorageService');
-          await savePdfData(project.id, arrayBuffer.slice(0));
+          const pdfBytes = await file.arrayBuffer();
+          await savePdfData(project.id, pdfBytes);
         }
 
         toast.success(
