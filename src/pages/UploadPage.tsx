@@ -54,10 +54,21 @@ function RecentProjects({
 
   if (projects.length === 0) return null;
 
-  const handleResume = (projectId: string) => {
+  const handleResume = async (projectId: string) => {
     const project = loadFullProject(projectId);
     if (project) {
       setProject(project);
+
+      // Restore PDF binary from IndexedDB for the viewer
+      if (project.fileType === 'pdf') {
+        const { loadPdfData } = await import('../services/fileStorageService');
+        const pdfData = await loadPdfData(projectId);
+        if (pdfData) {
+          const { setPdfData } = useWorkspaceStore.getState() as { setPdfData: (data: ArrayBuffer | null) => void };
+          setPdfData(pdfData);
+        }
+      }
+
       toast.success(`Resumed "${project.name}"`);
       navigate(`/project/${project.id}`);
     } else {
@@ -65,9 +76,12 @@ function RecentProjects({
     }
   };
 
-  const handleDelete = (e: React.MouseEvent, projectId: string) => {
+  const handleDelete = async (e: React.MouseEvent, projectId: string) => {
     e.stopPropagation();
     deleteProject(projectId);
+    // Also clean up PDF data from IndexedDB
+    const { deletePdfData } = await import('../services/fileStorageService');
+    await deletePdfData(projectId);
     setProjects((prev) => prev.filter((p) => p.id !== projectId));
     toast.info('Project removed from history');
   };
@@ -389,6 +403,12 @@ function UploadPage() {
         // Persist to localStorage for homepage project list
         const { saveFullProject } = await import('../services/projectHistoryService');
         saveFullProject(project);
+
+        // Persist PDF binary to IndexedDB for resume
+        if (fileType === 'pdf') {
+          const { savePdfData } = await import('../services/fileStorageService');
+          await savePdfData(project.id, arrayBuffer.slice(0));
+        }
 
         toast.success(
           `Loaded "${project.name}" — ${totalPages} page${totalPages !== 1 ? 's' : ''}`
