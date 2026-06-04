@@ -149,7 +149,7 @@ export async function exportToDocx(
               }),
             ],
             bidirectional: true,
-            alignment: AlignmentType.RIGHT,
+            alignment: AlignmentType.START,
             spacing: { after: 150, line: 360 },
           }),
         );
@@ -185,6 +185,7 @@ export async function exportToDocx(
     sections: [
       {
         properties: {
+          bidi: true,
           page: {
             margin: {
               top: 1440,    // 1 inch
