@@ -220,7 +220,6 @@ export async function exportToDocx(
     sections: [
       {
         properties: {
-          bidi: true,
           page: {
             margin: {
               top: 1440,    // 1 inch
