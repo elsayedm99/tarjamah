@@ -66,7 +66,7 @@ ${prevText}`
 6. Do NOT add, remove, or merge paragraphs. Do NOT add explanatory notes, headers, or footnotes that are not in the source.
 7. Maintain the formal register appropriate for court documents.
 8. Keep proper nouns (names of persons, places, and institutions) in their original English form unless a well-established Arabic equivalent exists.
-9. Preserve all numbers, dates, case references, and statutory citations exactly as they appear in the source.
+9. Convert all Western numerals (0-9) to Eastern Arabic numerals (٠-٩) in the translation. For example: 2024 → ٢٠٢٤, page 15 → صفحة ١٥. Keep case references and statutory citations in their original format alongside the Arabic text.
 10. For abbreviations (e.g., "S.I.", "J.", "C.J."), provide the Arabic translation followed by the original abbreviation in parentheses on first occurrence.
 11. Ensure grammatical agreement (gender, number, case) in all Arabic output.
 12. Output ONLY the Arabic translation — no commentary, no markup, no annotations.

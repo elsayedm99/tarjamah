@@ -422,7 +422,6 @@ export default function WorkspacePage() {
         onShiftSelectPage={handleShiftSelectPage}
         onSelectAll={handleSelectAll}
         onDeselectAll={handleDeselectAll}
-        onDeleteSelected={handleDeleteSelected}
         onAddPage={handleAddPage}
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
@@ -434,6 +433,7 @@ export default function WorkspacePage() {
         <Toolbar
           onTranslateSelected={handleTranslateSelected}
           onCopyOriginal={handleCopyOriginal}
+          onDeleteSelected={handleDeleteSelected}
           onAutoTranslate={handleAutoTranslate}
           onStopTranslation={handleStopTranslation}
           isTranslating={isTranslating}

@@ -16,7 +16,6 @@ interface SidebarProps {
   onShiftSelectPage: (pageNumber: number) => void;
   onSelectAll: () => void;
   onDeselectAll: () => void;
-  onDeleteSelected: () => void;
   onAddPage: () => void;
   collapsed: boolean;
   onToggleCollapse: () => void;
@@ -33,7 +32,6 @@ export default function Sidebar({
   onShiftSelectPage,
   onSelectAll,
   onDeselectAll,
-  onDeleteSelected,
   onAddPage,
   collapsed,
   onToggleCollapse,
@@ -134,7 +132,7 @@ export default function Sidebar({
           />
         </div>
 
-        {/* Select All / Deselect / Delete */}
+        {/* Select All / Deselect */}
         <div
           style={{
             display: 'flex',
@@ -155,22 +153,6 @@ export default function Sidebar({
             onClick={onDeselectAll}
           >
             Deselect
-          </button>
-          <button
-            className="btn btn-ghost btn-sm"
-            style={{
-              fontSize: '10px',
-              padding: '2px 6px',
-              color: selectedPages.length > 0 ? 'var(--error)' : undefined,
-            }}
-            onClick={onDeleteSelected}
-            disabled={selectedPages.length === 0}
-            title="Delete selected pages"
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="3 6 5 6 21 6" />
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-            </svg>
           </button>
         </div>
       </div>
