@@ -331,6 +331,7 @@ function UploadPage() {
             paragraphs: [],
             isManuallyEdited: false,
             isReviewed: false,
+            isCopiedOriginal: false,
             qualityFlags: [],
           }));
         } else {
@@ -352,6 +353,7 @@ function UploadPage() {
             paragraphs: [],
             isManuallyEdited: false,
             isReviewed: false,
+            isCopiedOriginal: false,
             qualityFlags: [],
           }));
 
@@ -365,6 +367,7 @@ function UploadPage() {
                 paragraphs: [],
                 isManuallyEdited: false,
                 isReviewed: false,
+            isCopiedOriginal: false,
                 qualityFlags: [],
               },
             ];

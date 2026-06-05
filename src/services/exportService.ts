@@ -8,6 +8,7 @@ import {
   Packer,
   Paragraph,
   TextRun,
+  ImageRun,
   AlignmentType,
   HeadingLevel,
   PageBreak,
@@ -61,6 +62,40 @@ export async function exportToDocx(
   for (let i = 0; i < pages.length; i++) {
     const page = pages[i];
     const translatedText = page.translatedText?.trim();
+
+    // Copied original — embed page image
+    if (page.isCopiedOriginal && page.originalPageImageDataUrl) {
+      // Page break before (except first page)
+      if (i > 0) {
+        children.push(new Paragraph({ children: [new PageBreak()] }));
+      }
+
+      // Convert data URL to buffer
+      const base64 = page.originalPageImageDataUrl.split(',')[1];
+      const byteChars = atob(base64);
+      const byteArray = new Uint8Array(byteChars.length);
+      for (let j = 0; j < byteChars.length; j++) {
+        byteArray[j] = byteChars.charCodeAt(j);
+      }
+
+      // A4 at 1 inch margins → ~6.5" wide, scale height proportionally
+      // Approximate the image aspect from data URL by loading into an Image
+      // For docx we use fixed A4-ish dimensions: 6.5" × 9.2" (landscape-safe)
+      children.push(
+        new Paragraph({
+          children: [
+            new ImageRun({
+              data: byteArray,
+              transformation: { width: 468, height: 660 }, // ~6.5"×9.2" at 72dpi
+              type: 'png',
+            }),
+          ],
+          alignment: AlignmentType.CENTER,
+        }),
+      );
+
+      continue;
+    }
 
     if (!translatedText && !includeSource) continue;
 

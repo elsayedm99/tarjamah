@@ -91,6 +91,7 @@ interface WorkspaceActions {
   updatePageSourceText: (pageNumber: number, sourceText: string) => void;
   markPageEdited: (pageNumber: number) => void;
   markPageReviewed: (pageNumber: number) => void;
+  markPageCopiedOriginal: (pageNumber: number, imageDataUrl: string) => void;
 
   // Page management
   deletePages: (pageNumbers: number[]) => void;
@@ -357,6 +358,24 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
         };
       }),
 
+    markPageCopiedOriginal: (pageNumber, imageDataUrl) =>
+      set((state) => {
+        if (!state.currentProject) return state;
+        return {
+          currentProject: updatePage(
+            state.currentProject,
+            pageNumber,
+            (page) => ({
+              ...page,
+              isCopiedOriginal: true,
+              originalPageImageDataUrl: imageDataUrl,
+              status: 'translated',
+              translatedText: '',
+            }),
+          ),
+        };
+      }),
+
     // ── Paragraph-level Updates ───────────────────────────
 
     updateParagraphTranslation: (pageNumber, paragraphId, translatedText) =>
@@ -438,6 +457,7 @@ export const useWorkspaceStore = create<WorkspaceState & WorkspaceActions>()(
           paragraphs: [],
           isManuallyEdited: false,
           isReviewed: false,
+          isCopiedOriginal: false,
           qualityFlags: [],
         };
         const pages = [...state.currentProject.pages];

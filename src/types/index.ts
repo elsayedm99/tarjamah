@@ -59,8 +59,11 @@ export interface PageData {
   paragraphs: ParagraphPair[];
   isManuallyEdited: boolean;
   isReviewed: boolean;
+  isCopiedOriginal: boolean;
   qualityFlags: QualityFlag[];
   thumbnailDataUrl?: string;
+  /** High-res PNG data URL of the original PDF page (set when Copy Original is used) */
+  originalPageImageDataUrl?: string;
 }
 
 export type PageStatus =

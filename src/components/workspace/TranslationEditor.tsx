@@ -158,6 +158,14 @@ function PageEditor({ page, onUpdate, onManualEdit }: PageEditorProps) {
         >
           الترجمة العربية ستظهر هنا…
         </div>
+      ) : page.isCopiedOriginal && page.originalPageImageDataUrl ? (
+        <div style={{ padding: '8px', background: 'white' }}>
+          <img
+            src={page.originalPageImageDataUrl}
+            alt={`Original page ${page.pageNumber}`}
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </div>
       ) : (
         <div style={{ minHeight: '100px' }}>
           {editor ? (

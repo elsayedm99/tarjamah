@@ -127,26 +127,51 @@ export default function WorkspacePage() {
     toast.success('Added blank page');
   }, [currentProject, addBlankPage]);
 
-  // ── Copy original text as-is (no translation) ─────────────
-  const handleCopyOriginal = useCallback(() => {
+  // ── Copy original page as image (no translation) ───────────
+  const handleCopyOriginal = useCallback(async () => {
     if (!currentProject) return;
     if (selectedPages.length === 0) {
       toast.error('No pages selected.');
       return;
     }
 
+    const { markPageCopiedOriginal } = useWorkspaceStore.getState();
+    const { pdfData } = useWorkspaceStore.getState();
+
+    if (!pdfData) {
+      toast.error('PDF data not available.');
+      return;
+    }
+
+    toast.info(`Rendering ${selectedPages.length} page${selectedPages.length !== 1 ? 's' : ''}…`);
+
     let count = 0;
+    const pdfjsLib = await import('pdfjs-dist');
+    const pdf = await pdfjsLib.getDocument({ data: pdfData.slice(0) }).promise;
+
     for (const pageNum of selectedPages) {
-      const page = currentProject.pages.find((p) => p.pageNumber === pageNum);
-      if (page?.sourceText) {
-        updatePageTranslation(pageNum, page.sourceText, [], []);
-        updatePageStatus(pageNum, 'translated');
+      try {
+        const page = await pdf.getPage(pageNum);
+        const viewport = page.getViewport({ scale: 2 }); // high-res
+
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) continue;
+
+        await page.render({ canvas, canvasContext: ctx, viewport }).promise;
+        const dataUrl = canvas.toDataURL('image/png');
+
+        markPageCopiedOriginal(pageNum, dataUrl);
         count++;
+      } catch (err) {
+        console.error(`Failed to render page ${pageNum}:`, err);
       }
     }
 
-    toast.success(`Copied ${count} page${count !== 1 ? 's' : ''} as-is`);
-  }, [currentProject, selectedPages, updatePageTranslation, updatePageStatus]);
+    toast.success(`Copied ${count} page${count !== 1 ? 's' : ''} as original`);
+  }, [currentProject, selectedPages]);
 
   // ── Translate selected pages (manual button) ─────────────
   const handleTranslateSelected = useCallback(async (explicitPages?: number[]) => {
